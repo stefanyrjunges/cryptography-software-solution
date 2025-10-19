@@ -49,7 +49,10 @@ public class LogInController {
         if (!isValidEmailAddress(emailTF.getText().trim())) {
             errorAlert.setTitle("Invalid e-mail address");
             errorAlert.setContentText("Invalid e-mail or password. Please try again.");
-            return errorAlert;
+            //If user had too many failed attempts, don't display the errorAlert
+            if (attempts < 5){
+                return errorAlert;
+            }
         } else if (isMissingField()) {
             errorAlert.setTitle("Missing fields");
             errorAlert.setContentText("Please fill in all the fields.");
