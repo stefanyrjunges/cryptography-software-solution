@@ -32,11 +32,13 @@ public class LogInController {
     /* Methods for input validation */
 
     private boolean isValidEmailAddress(String email) {
+        //Using Apache Commons Validator to ensure the data is valid
         EmailValidator validator = EmailValidator.getInstance();
         return validator.isValid(email);
     }
 
     private boolean isMissingField(){
+        //Ensuring there are no empty fields
         return emailTF.getText().trim().isEmpty() ||
                 passwordPF.getText().trim().isEmpty() ||
                 passwordTF.getText().trim().isEmpty();
@@ -44,6 +46,7 @@ public class LogInController {
 
     private Alert validateInput() {
 
+        //Ensuring data is valid and form is filled
         if (!isValidEmailAddress(emailTF.getText().trim())) {
             errorAlert.setTitle("Invalid e-mail address");
             errorAlert.setContentText("Invalid e-mail or password. Please try again.");
@@ -80,7 +83,7 @@ public class LogInController {
             loginBTN.setDisable(true);
             loginBTN.setStyle("-fx-background-color:grey");
 
-            //Permit button to be used again after 30s
+            //Allow button to be used again after 30s
             PauseTransition pause = new PauseTransition(Duration.seconds(30));
             pause.setOnFinished(event -> {
                 loginBTN.setDisable(false);
