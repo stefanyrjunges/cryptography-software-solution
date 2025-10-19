@@ -81,9 +81,11 @@ public class LogInController {
 
         //If log in attempts reached limit
         if (attempts >= 5){
-            errorAlert.setTitle("Error");
-            errorAlert.setContentText("Too many failed attempts. Try again after 30s.");
-            errorAlert.show();
+            Alert limitAttemptsAlert = new Alert(Alert.AlertType.ERROR);
+            limitAttemptsAlert.setHeaderText(null);
+            limitAttemptsAlert.setTitle("Error");
+            limitAttemptsAlert.setContentText("Too many failed attempts. Try again later.");
+            limitAttemptsAlert.show();
             //Disable log in button
             loginBTN.setDisable(true);
             loginBTN.setStyle("-fx-background-color:grey");
