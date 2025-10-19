@@ -199,11 +199,10 @@ public class RegisterController {
     }
 
     private boolean isMissingField() {
-        return emailTF.getText().trim().isEmpty() ||
-                passwordPF.getText().isEmpty() ||
-                passwordTF.getText().isEmpty() ||
-                confirmPasswordPF.getText().isEmpty() ||
-                confirmPasswordTF.getText().isEmpty();
+        boolean emailEmpty = emailTF.getText().trim().isEmpty();
+        boolean passwordEmpty = passwordPF.isVisible() ? passwordPF.getText().isEmpty() : passwordTF.getText().isEmpty();
+        boolean confirmPasswordEmpty = confirmPasswordPF.isVisible() ? confirmPasswordPF.getText().isEmpty() : confirmPasswordTF.getText().isEmpty();
+        return emailEmpty || passwordEmpty || confirmPasswordEmpty;
     }
 
     private boolean isStrongPassword() {
