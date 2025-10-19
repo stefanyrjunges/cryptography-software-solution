@@ -33,6 +33,8 @@ public class RegisterController {
 
     @FXML
     private void initialize() {
+        errorAlert.setHeaderText(null);
+
         /*Progress Bar listener*/
         //Tracking text changes to update the progress bar
         ChangeListener<String> strengthListener = (_, _, newVal) -> updateStrengthForText(newVal);
@@ -213,8 +215,8 @@ public class RegisterController {
 
     private Alert validateInput() {
         if (!isValidEmailAddress(emailTF.getText().trim())) {
-            errorAlert.setTitle("Invalid e-mail or password");
-            errorAlert.setContentText("Invalid e-mail or password. Please try again.");
+            errorAlert.setTitle("Invalid e-mail.");
+            errorAlert.setContentText("Invalid e-mail.");
             return errorAlert;
         } else if (isMissingField()) {
             errorAlert.setTitle("Missing fields");
@@ -245,6 +247,7 @@ public class RegisterController {
 
         if (validationAlert == null) {
             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setHeaderText(null);
             successAlert.setTitle("Signed up!");
             successAlert.setContentText("You're all set!");
             successAlert.showAndWait();
@@ -263,6 +266,7 @@ public class RegisterController {
                 newStage.setResizable(false);
                 newStage.show();
             } catch (IOException i) {
+                successAlert.setHeaderText(null);
                 successAlert.setContentText("An error occurred. Please try again");
                 System.out.println("Error: " + i);
                 successAlert.showAndWait();

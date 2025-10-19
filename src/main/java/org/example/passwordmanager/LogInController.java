@@ -29,6 +29,11 @@ public class LogInController {
     int attempts = 0;
     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
 
+    @FXML
+    private void initialize (){
+        errorAlert.setHeaderText(null);
+    }
+
     /*Methods for input validation*/
 
     private boolean isValidEmailAddress(String email) {
@@ -76,10 +81,9 @@ public class LogInController {
 
         //If log in attempts reached limit
         if (attempts >= 5){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Too many failed attempts. Try again after 30s.");
-            alert.show();
+            errorAlert.setTitle("Error");
+            errorAlert.setContentText("Too many failed attempts. Try again after 30s.");
+            errorAlert.show();
             //Disable log in button
             loginBTN.setDisable(true);
             loginBTN.setStyle("-fx-background-color:grey");
@@ -138,6 +142,7 @@ public class LogInController {
         Alert validationAlert = validateInput();
         if (validationAlert == null) {
             Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            successAlert.setHeaderText(null);
             successAlert.setTitle("Logged in!");
             successAlert.setTitle("You're logged in.");
         } else {
