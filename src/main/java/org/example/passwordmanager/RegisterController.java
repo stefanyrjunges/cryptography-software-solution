@@ -184,12 +184,12 @@ public class RegisterController {
 
     /* Methods for input validation */
 
-    public boolean isValidEmailAddress(String email) {
+    private boolean isValidEmailAddress(String email) {
         EmailValidator validator = EmailValidator.getInstance();
         return validator.isValid(email);
     }
 
-    public boolean isMissingField() {
+    private boolean isMissingField() {
         return emailTF.getText().trim().isEmpty() ||
                 passwordPF.getText().isEmpty() ||
                 passwordTF.getText().isEmpty() ||
@@ -197,17 +197,17 @@ public class RegisterController {
                 confirmPasswordTF.getText().isEmpty();
     }
 
-    public boolean isStrongPassword() {
+    private boolean isStrongPassword() {
         return strengthLBL.getText().equalsIgnoreCase("strong");
     }
 
-    public boolean isMatchPassword() {
+    private boolean isMatchPassword() {
         String password = passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
         String confirm = confirmPasswordPF.isVisible() ? confirmPasswordPF.getText() : confirmPasswordTF.getText();
         return password.equals(confirm);
     }
 
-    public Alert validateInput() {
+    private Alert validateInput() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         if (!isValidEmailAddress(emailTF.getText().trim())) {

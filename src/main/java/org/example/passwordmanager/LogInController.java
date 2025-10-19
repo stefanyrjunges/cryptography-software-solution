@@ -1,4 +1,5 @@
 package org.example.passwordmanager;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.io.IOException;
@@ -15,26 +17,28 @@ import java.io.IOException;
 public class LogInController {
 
     @FXML
-    Button signUpBTN;
+    Button signUpBTN, loginBTN;
     @FXML
     TextField emailTF, passwordTF;
     @FXML
     PasswordField passwordPF;
+    boolean loginButtonPressed;
+    int attempts = 0;
 
     /* Methods for input validation */
 
-    public boolean isValidEmailAddress(String email) {
+    private boolean isValidEmailAddress(String email) {
         EmailValidator validator = EmailValidator.getInstance();
         return validator.isValid(email);
     }
 
-    public boolean isMissingField(){
+    private boolean isMissingField(){
         return emailTF.getText().trim().isEmpty() ||
                 passwordPF.getText().trim().isEmpty() ||
                 passwordTF.getText().trim().isEmpty();
     }
 
-    public Alert validateInput() {
+    private Alert validateInput() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         if (!isValidEmailAddress(emailTF.getText().trim())) {
@@ -44,16 +48,52 @@ public class LogInController {
         } else if (isMissingField()) {
             alert.setTitle("Missing fields");
             alert.setContentText("Please fill in all the fields.");
+            passwordTF.clear();
+            passwordPF.clear();
             return alert;
         }
 
         return null;
     }
 
+    /* Method to prevent unlimited login attempts */
+
+    private void handleLoginAttempts() {
+
+        //If log in button was pressed, counts for one attempt
+        if (loginButtonPressed) {
+            attempts++;
+            //Reset boolean
+            loginButtonPressed = false;
+        }
+
+        //If log in attempts reached limit
+        if (attempts >= 5){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Too many failed attempts. Try again after 30s.");
+            alert.show();
+            //Disable log in button
+            loginBTN.setDisable(true);
+            loginBTN.setStyle("-fx-background-color:grey");
+
+            //Permit button to be used again after 30s
+            PauseTransition pause = new PauseTransition(Duration.seconds(30));
+            pause.setOnFinished(event -> {
+                loginBTN.setDisable(false);
+                loginBTN.setStyle("-fx-background-color:#0047AB");
+            });
+            pause.play();
+        }
+    }
+
     /* Log in button */
 
     @FXML
-    private void onClickLogIn() {
+    void onClickLogIn() {
+        loginButtonPressed = true;
+        handleLoginAttempts();
+
         Alert validationAlert = validateInput();
         if (validationAlert == null) {
             Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -67,7 +107,7 @@ public class LogInController {
     /* Sign up button */
 
     @FXML
-    private void onClickSignUp() {
+    void onClickSignUp() {
         //Open registration page
         try {
             Stage currentStage = (Stage) signUpBTN.getScene().getWindow();
