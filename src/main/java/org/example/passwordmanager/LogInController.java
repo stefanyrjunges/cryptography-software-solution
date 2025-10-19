@@ -89,6 +89,7 @@ public class LogInController {
             pause.setOnFinished(event -> {
                 loginBTN.setDisable(false);
                 loginBTN.setStyle("-fx-background-color:#0047AB");
+                attempts = 0;
             });
             pause.play();
         }
