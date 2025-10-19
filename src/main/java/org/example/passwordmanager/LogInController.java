@@ -4,24 +4,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.validator.routines.EmailValidator;
-
 import java.io.IOException;
+import java.util.Objects;
 
 public class LogInController {
 
     @FXML
     Button signUpBTN, loginBTN;
     @FXML
+    ToggleButton toggleButton;
+    @FXML
     TextField emailTF, passwordTF;
     @FXML
     PasswordField passwordPF;
+    @FXML
+    ImageView viewHideIMG;
     boolean loginButtonPressed;
     int attempts = 0;
     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -84,6 +87,37 @@ public class LogInController {
                 loginBTN.setStyle("-fx-background-color:#0047AB");
             });
             pause.play();
+        }
+    }
+
+    /* Toggle button */
+
+    @FXML
+    void onClickToggleButton() {
+        //Importing images
+        Image eyeOpen = new Image(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/images/view.png")).toExternalForm());
+        Image eyeClosed = new Image(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/images/hide.png")).toExternalForm());
+
+        if (toggleButton.isSelected()) {
+            //Managing fields visibility according to selection
+            passwordTF.setText(passwordPF.getText());
+            passwordTF.setVisible(true);
+            passwordTF.setManaged(true);
+            passwordPF.setVisible(false);
+            passwordPF.setManaged(false);
+
+            //Updating both text field and password field at the same time
+            passwordTF.textProperty().addListener((_, _, newVal) -> passwordPF.setText(newVal));
+            //Changing icon image
+            viewHideIMG.setImage(eyeClosed);
+        } else {
+            passwordPF.setText(passwordTF.getText());
+            passwordTF.setVisible(false);
+            passwordTF.setManaged(false);
+            passwordPF.setVisible(true);
+            passwordPF.setManaged(true);
+
+            viewHideIMG.setImage(eyeOpen);
         }
     }
 

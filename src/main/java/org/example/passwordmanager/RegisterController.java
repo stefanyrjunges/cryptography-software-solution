@@ -15,6 +15,8 @@ import java.util.Objects;
 import javafx.stage.Stage;
 import org.apache.commons.validator.routines.EmailValidator;
 
+import javax.swing.*;
+
 public class RegisterController {
 
     @FXML
@@ -155,7 +157,7 @@ public class RegisterController {
         }
     }
 
-    private void toggleButton(PasswordField pf, TextField tf, ImageView showHideIcon, boolean isSelected) {
+    private void toggleButton(PasswordField pf, TextField tf, ImageView viewHideICON, boolean isSelected) {
         //Importing images
         Image eyeOpen = new Image(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/images/view.png")).toExternalForm());
         Image eyeClosed = new Image(Objects.requireNonNull(getClass().getResource("/org/example/passwordmanager/images/hide.png")).toExternalForm());
@@ -171,7 +173,7 @@ public class RegisterController {
             //Updating both text field and password field at the same time
             tf.textProperty().addListener((_, _, newVal) -> pf.setText(newVal));
             //Changing icon image
-            showHideIcon.setImage(eyeClosed);
+            viewHideICON.setImage(eyeClosed);
         } else {
             pf.setText(tf.getText());
             tf.setVisible(false);
@@ -179,7 +181,7 @@ public class RegisterController {
             pf.setVisible(true);
             pf.setManaged(true);
 
-            showHideIcon.setImage(eyeOpen);
+            viewHideICON.setImage(eyeOpen);
         }
     }
 
@@ -267,6 +269,28 @@ public class RegisterController {
             }
         } else {
             validationAlert.showAndWait();
+        }
+    }
+
+    /* Back button */
+
+    @FXML
+    void onClickBack(ActionEvent event) {
+        try {
+            //Loading log in page again
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage newStage = new Stage();
+            newStage.setTitle("Log In");
+            newStage.setScene(new Scene(root));
+            newStage.setResizable(false);
+            newStage.show();
+        } catch (IOException i) {
+            System.out.println("Error: " + i);
         }
     }
 }

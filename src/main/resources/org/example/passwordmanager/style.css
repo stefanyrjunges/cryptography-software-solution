@@ -45,8 +45,14 @@
 }
 
 #toggleButton, #toggleButton2 {
-        -fx-background-color: transparent;
-        -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+#backBTN {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 31px;
 }
 
 #charactersLBL, #upplowLBL, #numLBL, #symLBL {

@@ -14,7 +14,14 @@
 
 <Pane prefHeight="663.0" prefWidth="401.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.RegisterController">
     <children>
-        <AnchorPane fx:id="bannerAP" prefHeight="67.0" prefWidth="401.0" style="-fx-background-color: #0047AB;" />
+        <AnchorPane fx:id="bannerAP" prefHeight="67.0" prefWidth="401.0" style="-fx-background-color: #0047AB;">
+         <children>
+            <Button fx:id="backBTN" layoutX="3.0" layoutY="4.0" mnemonicParsing="false" onAction="#onClickBack" prefHeight="67.0" prefWidth="78.0" text="←">
+               <font>
+                  <Font name="System Bold" size="31.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
         <Label fx:id="registerLBL" layoutX="29.0" layoutY="86.0" text="Register">
             <font>
                 <Font name="Ebrima Bold" size="36.0" />
