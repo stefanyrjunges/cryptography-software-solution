@@ -15,8 +15,6 @@ import java.util.Objects;
 import javafx.stage.Stage;
 import org.apache.commons.validator.routines.EmailValidator;
 
-import javax.swing.*;
-
 public class RegisterController {
 
     @FXML
@@ -35,13 +33,13 @@ public class RegisterController {
 
     @FXML
     private void initialize() {
-        /* Progress Bar listener */
+        /*Progress Bar listener*/
         //Tracking text changes to update the progress bar
         ChangeListener<String> strengthListener = (_, _, newVal) -> updateStrengthForText(newVal);
         if (passwordTF != null) passwordTF.textProperty().addListener(strengthListener);
         if (passwordPF != null) passwordPF.textProperty().addListener(strengthListener);
 
-        /* Password Requirements listener */
+        /*Password Requirements listener*/
         //Adding a listener to the Password Field to keep track of requirements
         passwordPF.textProperty().addListener((_, _, newText) -> {
             boolean hasLength = newText.length() >= 12;
@@ -50,7 +48,7 @@ public class RegisterController {
             boolean hasNumber = newText.matches(".*\\d.*");
             boolean hasSymbol = newText.matches(".*[^a-zA-Z0-9].*");
 
-            //Changing labels' style as the requirements are fulfilled
+            //Changing labels' style as/if the requirements are fulfilled
             charactersLBL.setStyle(hasLength ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
             upplowLBL.setStyle(hasLower && hasUpper ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
             numLBL.setStyle(hasNumber ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
@@ -58,12 +56,13 @@ public class RegisterController {
         });
     }
 
-    /* Methods for generating a strong password */
+    /*Methods for generating a strong password*/
 
     @FXML
     void useStrongPassword() {
-        //Filling the fields with the random generated password
+        //Calling method to generate a random password
         String generatedPassword = generateStrongPassword();
+        //Filling the fields with the random generated password
         passwordPF.setText(generatedPassword);
         passwordTF.setText(generatedPassword);
         confirmPasswordTF.setText(generatedPassword);
@@ -83,7 +82,7 @@ public class RegisterController {
 
         //Creating a new password by selecting random characters
         StringBuilder password = new StringBuilder();
-        //Ensuring the password has at least one of each character
+        //Ensuring the password has at least one of each character, and appending them to the password
         password.append(uppercaseChar.charAt(random.nextInt(uppercaseChar.length())));
         password.append(lowercaseChar.charAt(random.nextInt(lowercaseChar.length())));
         password.append(numbersChar.charAt(random.nextInt(numbersChar.length())));
@@ -101,7 +100,7 @@ public class RegisterController {
     private String shuffleString(String randomPassword, SecureRandom random) {
         //Creating an array of characters from the random generated password
         char[] chars = randomPassword.toCharArray();
-        //Selecting random indexes and swapping them
+        //Selecting random indexes and swapping them to remove predictable patterns
         for (int i = 0; i < chars.length; i++) {
             int randomIndex = random.nextInt(chars.length);
             char temp = chars[i];
@@ -113,20 +112,20 @@ public class RegisterController {
     }
 
     private double calculateEntropy(String password) {
-        //Password contains 62 possible characters
-        int passwordSize = 62;
+        //Password contains 72 possible characters
+        int passwordSize = 72;
         //Calculating entropy using entropy = password length × log₂(charset size)
         return password.length() * (Math.log(passwordSize) / Math.log(2));
     }
 
     private void updateStrengthForText(String password) {
-        //Using entropy calculation to update the progress bar
+        //Using entropy calculation to update the progress bar according to the text
         double entropy = calculateEntropy(password);
         updateProgressBar(entropy);
     }
 
     private void updateProgressBar(double entropy) {
-        //Make changes based on password strength
+        //Make changes on the progress bar based on password strength
         if (entropy < 40) {
             strengthLBL.setText("Weak");
             strengthBar.setProgress(0.25F);
@@ -142,7 +141,7 @@ public class RegisterController {
         }
     }
 
-    /* Methods to hide/unhide the password */
+    /*Methods to hide/unhide the password*/
 
     @FXML
     void handleToggle(ActionEvent event) {
@@ -185,9 +184,10 @@ public class RegisterController {
         }
     }
 
-    /* Methods for input validation */
+    /*Methods for input validation*/
 
     private boolean isValidEmailAddress(String email) {
+        //Using Apache Commons Validator to ensure the data is valid
         EmailValidator validator = EmailValidator.getInstance();
         return validator.isValid(email);
     }
@@ -205,13 +205,13 @@ public class RegisterController {
     }
 
     private boolean isMatchPassword() {
+        //Ensuring both passwords match
         String password = passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
         String confirm = confirmPasswordPF.isVisible() ? confirmPasswordPF.getText() : confirmPasswordTF.getText();
         return password.equals(confirm);
     }
 
     private Alert validateInput() {
-
         if (!isValidEmailAddress(emailTF.getText().trim())) {
             errorAlert.setTitle("Invalid e-mail or password");
             errorAlert.setContentText("Invalid e-mail or password. Please try again.");
@@ -237,7 +237,7 @@ public class RegisterController {
         return null;
     }
 
-    /* Sign up button */
+    /*Sign up button*/
 
     @FXML
     void onClickSignUp(ActionEvent event) {
@@ -272,7 +272,7 @@ public class RegisterController {
         }
     }
 
-    /* Back button */
+    /*Back button*/
 
     @FXML
     void onClickBack(ActionEvent event) {

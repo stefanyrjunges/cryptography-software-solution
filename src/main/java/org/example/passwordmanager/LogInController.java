@@ -29,7 +29,7 @@ public class LogInController {
     int attempts = 0;
     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
 
-    /* Methods for input validation */
+    /*Methods for input validation*/
 
     private boolean isValidEmailAddress(String email) {
         //Using Apache Commons Validator to ensure the data is valid
@@ -45,7 +45,6 @@ public class LogInController {
     }
 
     private Alert validateInput() {
-
         //Ensuring data is valid and form is filled
         if (!isValidEmailAddress(emailTF.getText().trim())) {
             errorAlert.setTitle("Invalid e-mail address");
@@ -62,10 +61,9 @@ public class LogInController {
         return null;
     }
 
-    /* Method to prevent unlimited login attempts */
+    /*Method to prevent unlimited login attempts*/
 
     private void handleLoginAttempts() {
-
         //If log in button was pressed, counts for one attempt
         if (loginButtonPressed) {
             attempts++;
@@ -93,7 +91,7 @@ public class LogInController {
         }
     }
 
-    /* Toggle button */
+    /*Toggle button*/
 
     @FXML
     void onClickToggleButton() {
@@ -123,7 +121,7 @@ public class LogInController {
         }
     }
 
-    /* Log in button */
+    /*Log in button*/
 
     @FXML
     void onClickLogIn() {
