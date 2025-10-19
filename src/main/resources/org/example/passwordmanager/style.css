@@ -1,0 +1,54 @@
+.label {
+    -fx-font-family: 'Ebrima';
+}
+
+.text-field {
+    -fx-border-color: #000;       /* border color */
+    -fx-border-width: 0.5px;           /* thickness */
+    -fx-border-radius: 2px;          /* rounded corners */
+    -fx-background-radius: 2px;      /* match background to border */
+    -fx-focus-color: transparent;    /* optional: remove default blue focus */
+}
+
+#bannerAP {
+    -fx-background-color: #0047AB;
+    -fx-background-radius: 0 0 10px 10px;
+    -fx-border-color: #4A90E2;
+    -fx-border-width: 2px;
+    -fx-border-radius: 0 0 10px 10px;
+}
+
+.button {
+    -fx-font-family: 'Ebrima';
+    -fx-background-color: #0047AB;
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+
+}
+
+#signUpBTN {
+    -fx-font-family: 'Ebrima';
+    -fx-background-color: transparent;
+    -fx-text-fill: #0047AB;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+#strongPassBTN {
+    -fx-background-color: #1C398E;
+    -fx-text-fill: white;
+    -fx-font-size: 9px;
+}
+
+#strongPassBTN:hover {
+    -fx-background-color: #193CB8;
+}
+
+#toggleButton, #toggleButton2 {
+        -fx-background-color: transparent;
+        -fx-cursor: hand;
+}
+
+#charactersLBL, #upplowLBL, #numLBL, #symLBL {
+    -fx-text-fill: #ff0000;
+}
