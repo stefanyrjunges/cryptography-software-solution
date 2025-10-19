@@ -211,8 +211,8 @@ public class RegisterController {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         if (!isValidEmailAddress(emailTF.getText().trim())) {
-            alert.setTitle("Invalid e-mail address");
-            alert.setContentText("Invalid e-mail address. Please try again.");
+            alert.setTitle("Invalid e-mail or password");
+            alert.setContentText("Invalid e-mail or password. Please try again.");
             return alert;
         } else if (isMissingField()) {
             alert.setTitle("Missing fields");
@@ -225,6 +225,10 @@ public class RegisterController {
         } else if (!isMatchPassword()) {
             alert.setTitle("Mismatching passwords");
             alert.setContentText("Your passwords don't match.");
+            passwordPF.clear();
+            confirmPasswordPF.clear();
+            passwordTF.clear();
+            confirmPasswordTF.clear();
             return alert;
         }
 
@@ -257,7 +261,8 @@ public class RegisterController {
                 newStage.setResizable(false);
                 newStage.show();
             } catch (IOException i) {
-                successAlert.setContentText("Error: " + i);
+                successAlert.setContentText("An error occurred. Please try again");
+                System.out.println("Error: " + i);
                 successAlert.showAndWait();
             }
         } else {

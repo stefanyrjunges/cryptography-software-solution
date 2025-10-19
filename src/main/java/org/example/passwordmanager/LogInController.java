@@ -29,9 +29,9 @@ public class LogInController {
     }
 
     public boolean isMissingField(){
-        return emailTF.getText().isEmpty() ||
-                passwordPF.getText().isEmpty() ||
-                passwordTF.getText().isEmpty();
+        return emailTF.getText().trim().isEmpty() ||
+                passwordPF.getText().trim().isEmpty() ||
+                passwordTF.getText().trim().isEmpty();
     }
 
     public Alert validateInput() {
@@ -39,7 +39,7 @@ public class LogInController {
 
         if (!isValidEmailAddress(emailTF.getText().trim())) {
             alert.setTitle("Invalid e-mail address");
-            alert.setContentText("Invalid e-mail address. Please try again.");
+            alert.setContentText("Invalid e-mail or password. Please try again.");
             return alert;
         } else if (isMissingField()) {
             alert.setTitle("Missing fields");
@@ -84,7 +84,8 @@ public class LogInController {
         } catch (IOException i) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setContentText("Error: " + i);
+            alert.setContentText("An error occurred. Please try again.");
+            System.out.println("Error: " + i);
         }
     }
 }
