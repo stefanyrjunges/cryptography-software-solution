@@ -29,6 +29,7 @@ public class RegisterController {
     ToggleButton toggleButton, toggleButton2;
     @FXML
     ProgressBar strengthBar;
+    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
 
     @FXML
     private void initialize() {
@@ -208,28 +209,27 @@ public class RegisterController {
     }
 
     private Alert validateInput() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
 
         if (!isValidEmailAddress(emailTF.getText().trim())) {
-            alert.setTitle("Invalid e-mail or password");
-            alert.setContentText("Invalid e-mail or password. Please try again.");
-            return alert;
+            errorAlert.setTitle("Invalid e-mail or password");
+            errorAlert.setContentText("Invalid e-mail or password. Please try again.");
+            return errorAlert;
         } else if (isMissingField()) {
-            alert.setTitle("Missing fields");
-            alert.setContentText("Please fill in all the fields.");
-            return alert;
+            errorAlert.setTitle("Missing fields");
+            errorAlert.setContentText("Please fill in all the fields.");
+            return errorAlert;
         } else if (!isStrongPassword()) {
-            alert.setTitle("Weak password");
-            alert.setContentText("Your password is weak. Please choose another or generate a random one.");
-            return alert;
+            errorAlert.setTitle("Weak password");
+            errorAlert.setContentText("Your password is weak. Please choose another or generate a random one.");
+            return errorAlert;
         } else if (!isMatchPassword()) {
-            alert.setTitle("Mismatching passwords");
-            alert.setContentText("Your passwords don't match.");
+            errorAlert.setTitle("Mismatching passwords");
+            errorAlert.setContentText("Your passwords don't match.");
             passwordPF.clear();
             confirmPasswordPF.clear();
             passwordTF.clear();
             confirmPasswordTF.clear();
-            return alert;
+            return errorAlert;
         }
 
         return null;
@@ -269,5 +269,4 @@ public class RegisterController {
             validationAlert.showAndWait();
         }
     }
-
 }

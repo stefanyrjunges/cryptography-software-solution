@@ -24,6 +24,7 @@ public class LogInController {
     PasswordField passwordPF;
     boolean loginButtonPressed;
     int attempts = 0;
+    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
 
     /* Methods for input validation */
 
@@ -39,18 +40,17 @@ public class LogInController {
     }
 
     private Alert validateInput() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
 
         if (!isValidEmailAddress(emailTF.getText().trim())) {
-            alert.setTitle("Invalid e-mail address");
-            alert.setContentText("Invalid e-mail or password. Please try again.");
-            return alert;
+            errorAlert.setTitle("Invalid e-mail address");
+            errorAlert.setContentText("Invalid e-mail or password. Please try again.");
+            return errorAlert;
         } else if (isMissingField()) {
-            alert.setTitle("Missing fields");
-            alert.setContentText("Please fill in all the fields.");
+            errorAlert.setTitle("Missing fields");
+            errorAlert.setContentText("Please fill in all the fields.");
             passwordTF.clear();
             passwordPF.clear();
-            return alert;
+            return errorAlert;
         }
 
         return null;
@@ -122,9 +122,8 @@ public class LogInController {
             newStage.setResizable(false);
             newStage.show();
         } catch (IOException i) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("An error occurred. Please try again.");
+            errorAlert.setTitle("Error");
+            errorAlert.setContentText("An error occurred. Please try again.");
             System.out.println("Error: " + i);
         }
     }
