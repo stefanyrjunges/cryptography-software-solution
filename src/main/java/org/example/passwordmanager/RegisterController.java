@@ -1,6 +1,8 @@
 package org.example.passwordmanager;
+
 import java.io.IOException;
 import java.security.SecureRandom;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +13,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.beans.value.ChangeListener;
+
 import java.util.Objects;
+
 import javafx.stage.Stage;
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -214,13 +218,13 @@ public class RegisterController {
     }
 
     private Alert validateInput() {
-        if (!isValidEmailAddress(emailTF.getText().trim())) {
-            errorAlert.setTitle("Invalid e-mail.");
-            errorAlert.setContentText("Invalid e-mail.");
-            return errorAlert;
-        } else if (isMissingField()) {
+        if (isMissingField()) {
             errorAlert.setTitle("Missing fields");
             errorAlert.setContentText("Please fill in all the fields.");
+            return errorAlert;
+        } else if (!isValidEmailAddress(emailTF.getText().trim())) {
+            errorAlert.setTitle("Invalid e-mail.");
+            errorAlert.setContentText("Invalid e-mail.");
             return errorAlert;
         } else if (!isStrongPassword()) {
             errorAlert.setTitle("Weak password");
