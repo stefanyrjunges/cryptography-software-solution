@@ -119,7 +119,6 @@ public class LogInController {
             passwordTF.setManaged(false);
             passwordPF.setVisible(true);
             passwordPF.setManaged(true);
-
             viewHideIMG.setImage(eyeOpen);
         }
     }
@@ -128,9 +127,12 @@ public class LogInController {
 
     @FXML
     void onClickLogIn() {
+        //Storing pressed button for later use
         loginButtonPressed = true;
+        //Calling method to check amount of log in attempts
         handleLoginAttempts();
 
+        //Validating input and displaying a message according to result
         Alert validationAlert = validateInput();
         if (validationAlert == null) {
             Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -145,7 +147,7 @@ public class LogInController {
 
     @FXML
     void onClickSignUp() {
-        //Open registration page
+        //Open registration page when button is pressed
         try {
             Stage currentStage = (Stage) signUpBTN.getScene().getWindow();
             currentStage.close();
