@@ -190,8 +190,14 @@ public class RegisterController {
         }
     }
 
-    /*Methods for input validation*/
+    private String getPasswordInput() {
+        return passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
+    }
+    private String getConfirmInput() {
+        return confirmPasswordPF.isVisible() ? confirmPasswordPF.getText() : confirmPasswordTF.getText();
+    }
 
+    /*Methods for input validation*/
     private boolean isValidEmailAddress(String email) {
         //Using Apache Commons Validator to ensure the data is valid
         EmailValidator validator = EmailValidator.getInstance();
@@ -249,6 +255,26 @@ public class RegisterController {
         Alert validationAlert = validateInput();
 
         if (validationAlert == null) {
+            String email = emailTF.getText().trim().toLowerCase();
+
+            // Prevent duplicate accounts (in-memory now; enforce again in DB later)
+            if (AppContext.UserRepo.usernameExists(email)) {
+                errorAlert.setTitle("Account exists");
+                errorAlert.setContentText("An account with this email already exists.");
+                errorAlert.showAndWait();
+                return;
+            }
+
+            // 1) Hash the password (BCrypt generates & embeds the salt)
+            String hash = PasswordHash.hash(getPasswordInput());
+            System.out.println("New user registered:");
+            System.out.println("Email: " + email);
+            System.out.println("BCrypt hash: " + hash);
+
+            // 2) Save (email, hash)
+            AppContext.UserRepo.saveUser(email, hash);
+
+            // 3) Inform user and go back to login
             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
             successAlert.setHeaderText(null);
             successAlert.setTitle("Signed up!");
@@ -256,7 +282,6 @@ public class RegisterController {
             successAlert.showAndWait();
 
             try {
-                //Loading log in page again
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 currentStage.close();
 
@@ -269,16 +294,15 @@ public class RegisterController {
                 newStage.setResizable(false);
                 newStage.show();
             } catch (IOException i) {
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("An error occurred. Please try again");
                 System.out.println("Error: " + i);
-                successAlert.showAndWait();
+                errorAlert.setTitle("Error");
+                errorAlert.setContentText("An error occurred. Please try again.");
+                errorAlert.showAndWait();
             }
         } else {
             validationAlert.showAndWait();
         }
     }
-
     /*Back button*/
 
     @FXML

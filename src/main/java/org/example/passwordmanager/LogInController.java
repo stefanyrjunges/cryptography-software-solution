@@ -43,10 +43,16 @@ public class LogInController {
     }
 
     private boolean isMissingField(){
-        //Ensuring there are no empty fields
-        return emailTF.getText().trim().isEmpty() ||
-                passwordPF.getText().trim().isEmpty() ||
-                passwordTF.getText().trim().isEmpty();
+        boolean emailEmpty = emailTF.getText().trim().isEmpty();
+        boolean passwordEmpty = passwordPF.isVisible()
+                ? passwordPF.getText().trim().isEmpty()
+                : passwordTF.getText().trim().isEmpty();
+        return emailEmpty || passwordEmpty;
+    }
+
+    //helper to read visible password
+    private String getPasswordInput() {
+        return passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
     }
 
     private Alert validateInput() {
@@ -143,10 +149,27 @@ public class LogInController {
         //Validating input and displaying a message according to result
         Alert validationAlert = validateInput();
         if (validationAlert == null) {
-            Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
-            successAlert.setHeaderText(null);
-            successAlert.setTitle("Logged in!");
-            successAlert.setTitle("You're logged in.");
+            String email = emailTF.getText().trim().toLowerCase();
+            String input = getPasswordInput();
+
+            String storedHash = AppContext.UserRepo.findHashByEmail(email);
+
+            boolean ok = storedHash != null && PasswordHash.verify(input, storedHash);
+
+            if (ok) {
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setHeaderText(null);
+                successAlert.setTitle("Logged in!");
+                successAlert.setContentText("You're logged in.");
+                successAlert.showAndWait();
+                // proceed to your next scene/dashboard here
+            } else {
+                Alert fail = new Alert(Alert.AlertType.ERROR);
+                fail.setHeaderText(null);
+                fail.setTitle("Invalid credentials");
+                fail.setContentText("Invalid e-mail or password. Please try again.");
+                fail.showAndWait();
+            }
         } else {
             validationAlert.showAndWait();
         }
