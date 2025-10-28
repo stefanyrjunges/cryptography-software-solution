@@ -323,6 +323,7 @@ public class RegisterController {
             validationAlert.showAndWait();
         }
     }
+
     /*Back button*/
 
     @FXML
