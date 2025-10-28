@@ -41,13 +41,13 @@ public class RegisterController {
 
         /*Progress Bar listener*/
         //Tracking text changes to update the progress bar
-        ChangeListener<String> strengthListener = (_, _, newVal) -> updateStrengthForText(newVal);
+        ChangeListener<String> strengthListener = (obsVal, oldVal, newVal) -> updateStrengthForText(newVal);
         if (passwordTF != null) passwordTF.textProperty().addListener(strengthListener);
         if (passwordPF != null) passwordPF.textProperty().addListener(strengthListener);
 
         /*Password Requirements listener*/
         //Adding a listener to the Password Field to keep track of requirements
-        passwordPF.textProperty().addListener((_, _, newText) -> {
+        passwordPF.textProperty().addListener((obsVal, oldVal, newText) -> {
             boolean hasLength = newText.length() >= 12;
             boolean hasUpper = newText.matches(".*[A-Z].*");
             boolean hasLower = newText.matches(".*[a-z].*");
@@ -118,10 +118,20 @@ public class RegisterController {
     }
 
     private double calculateEntropy(String password) {
-        //Password contains 72 possible characters
-        int passwordSize = 72;
-        //Calculating entropy using entropy = password length × log₂(charset size)
-        return password.length() * (Math.log(passwordSize) / Math.log(2));
+            //Set the charset size to 0
+            int charsetSize = 0;
+
+            //Change the size if the requirements were met
+            if (password.matches(".*[a-z].*")) charsetSize += 26;
+            if (password.matches(".*[A-Z].*")) charsetSize += 26;
+            if (password.matches(".*[0-9].*")) charsetSize += 10;
+            if (password.matches(".*[^a-zA-Z0-9].*")) charsetSize += 32;
+
+            //Avoiding possible errors in calculation
+            if (charsetSize == 0) return 0;
+
+            //Calculating entropy using entropy = password length × log₂(charset size)
+            return password.length() * (Math.log(charsetSize) / Math.log(2));
     }
 
     private void updateStrengthForText(String password) {
@@ -136,12 +146,16 @@ public class RegisterController {
             strengthLBL.setText("Weak");
             strengthBar.setProgress(0.25F);
             strengthBar.setStyle("-fx-accent: red;");
-        } else if (entropy < 70) {
+        } else if (entropy < 60) {
             strengthLBL.setText("Medium");
-            strengthBar.setProgress(0.50F);
+            strengthBar.setProgress(0.5F);
             strengthBar.setStyle("-fx-accent: orange;");
-        } else {
+        } else if (entropy < 80) {
             strengthLBL.setText("Strong");
+            strengthBar.setProgress(0.75F);
+            strengthBar.setStyle("-fx-accent: yellowgreen;");
+        } else {
+            strengthLBL.setText("Very Strong");
             strengthBar.setProgress(1F);
             strengthBar.setStyle("-fx-accent: green;");
         }
@@ -176,7 +190,7 @@ public class RegisterController {
             pf.setManaged(false);
 
             //Updating both text field and password field at the same time
-            tf.textProperty().addListener((_, _, newVal) -> pf.setText(newVal));
+            tf.textProperty().addListener((obsVal, oldVal, newVal) -> pf.setText(newVal));
             //Changing icon image
             viewHideICON.setImage(eyeClosed);
         } else {
@@ -265,16 +279,16 @@ public class RegisterController {
                 return;
             }
 
-            // 1) Hash the password (BCrypt generates & embeds the salt)
+            // Hash the password
             String hash = PasswordHash.hash(getPasswordInput());
             System.out.println("New user registered:");
             System.out.println("Email: " + email);
             System.out.println("BCrypt hash: " + hash);
 
-            // 2) Save (email, hash)
+            // Save (email, hash)
             AppContext.UserRepo.saveUser(email, hash);
 
-            // 3) Inform user and go back to login
+            // Inform user and go back to login
             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
             successAlert.setHeaderText(null);
             successAlert.setTitle("Signed up!");

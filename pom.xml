@@ -49,6 +49,13 @@
             <version>1.10.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>17.0.6</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.mindrot.bcrypt/bcrypt -->
         <dependency>
             <groupId>org.mindrot</groupId>
@@ -65,8 +72,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>24</source>
-                    <target>24</target>
+                    <release>17</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -78,7 +84,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.example.passwordmanager/org.example.passwordmanager.HelloApplication
+                            <mainClass>org.example.passwordmanager/org.example.passwordmanager.Start
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

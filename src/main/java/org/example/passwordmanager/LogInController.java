@@ -124,7 +124,7 @@ public class LogInController {
             passwordPF.setManaged(false);
 
             //Updating both text field and password field at the same time
-            passwordTF.textProperty().addListener((_, _, newVal) -> passwordPF.setText(newVal));
+            passwordTF.textProperty().addListener((obsVal, oldVal, newVal) -> passwordPF.setText(newVal));
             //Changing icon image
             viewHideIMG.setImage(eyeClosed);
         } else {
