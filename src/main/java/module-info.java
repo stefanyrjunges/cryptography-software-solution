@@ -5,6 +5,7 @@ module org.example.passwordmanager {
     requires org.controlsfx.controls;
     requires java.desktop;
     requires org.apache.commons.validator;
+    requires jbcrypt;
 
     opens org.example.passwordmanager to javafx.fxml;
     exports org.example.passwordmanager;
