@@ -117,6 +117,17 @@ public class RegisterController {
         return new String(chars);
     }
 
+    private boolean arePasswordRequirementsMet(String password) {
+        //Checking if all password requirements are met
+        boolean hasUpper = password.matches(".*[A-Z].*");
+        boolean hasLower = password.matches(".*[a-z].*");
+        boolean hasNumber = password.matches(".*\\d.*");
+        boolean hasSymbol = password.matches(".*[^a-zA-Z0-9].*");
+        boolean hasLength = password.length() >= 12;
+
+        return hasUpper && hasLower && hasNumber && hasSymbol && hasLength;
+    }
+
     private double calculateEntropy(String password) {
             //Set the charset size to 0
             int charsetSize = 0;
@@ -137,10 +148,10 @@ public class RegisterController {
     private void updateStrengthForText(String password) {
         //Using entropy calculation to update the progress bar according to the text
         double entropy = calculateEntropy(password);
-        updateProgressBar(entropy);
+        updateProgressBar(entropy, password);
     }
 
-    private void updateProgressBar(double entropy) {
+    private void updateProgressBar(double entropy, String password) {
         //Make changes on the progress bar based on password strength
         if (entropy < 40) {
             strengthLBL.setText("Weak");
@@ -150,17 +161,12 @@ public class RegisterController {
             strengthLBL.setText("Medium");
             strengthBar.setProgress(0.5F);
             strengthBar.setStyle("-fx-accent: orange;");
-        } else if (entropy < 80) {
+        } else if (entropy < 80 && arePasswordRequirementsMet(password)) {
             strengthLBL.setText("Strong");
-            strengthBar.setProgress(0.75F);
-            strengthBar.setStyle("-fx-accent: yellowgreen;");
-        } else {
-            strengthLBL.setText("Very Strong");
             strengthBar.setProgress(1F);
             strengthBar.setStyle("-fx-accent: green;");
         }
     }
-
     /*Methods to hide/unhide the password*/
 
     @FXML
