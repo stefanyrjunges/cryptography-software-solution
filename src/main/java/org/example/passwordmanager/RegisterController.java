@@ -39,13 +39,13 @@ public class RegisterController {
     private void initialize() {
         errorAlert.setHeaderText(null);
 
-        /*Progress Bar listener*/
+        /*Progress Bar listener - Stefany*/
         //Tracking text changes to update the progress bar
         ChangeListener<String> strengthListener = (obsVal, oldVal, newVal) -> updateStrengthForText(newVal);
         if (passwordTF != null) passwordTF.textProperty().addListener(strengthListener);
         if (passwordPF != null) passwordPF.textProperty().addListener(strengthListener);
 
-        /*Password Requirements listener*/
+        /*Password Requirements listener - Stefany*/
         //Adding a listener to the Password Field to keep track of requirements
         passwordPF.textProperty().addListener((obsVal, oldVal, newText) -> {
             boolean hasLength = newText.length() >= 12;
@@ -62,7 +62,7 @@ public class RegisterController {
         });
     }
 
-    /*Methods for generating a strong password*/
+    /*Methods for generating a strong password - Stefany*/
 
     @FXML
     void useStrongPassword() {
@@ -167,7 +167,8 @@ public class RegisterController {
             strengthBar.setStyle("-fx-accent: green;");
         }
     }
-    /*Methods to hide/unhide the password*/
+
+    /*Methods to hide/unhide the password - Stefany*/
 
     @FXML
     void handleToggle(ActionEvent event) {
@@ -210,14 +211,7 @@ public class RegisterController {
         }
     }
 
-    private String getPasswordInput() {
-        return passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
-    }
-    private String getConfirmInput() {
-        return confirmPasswordPF.isVisible() ? confirmPasswordPF.getText() : confirmPasswordTF.getText();
-    }
-
-    /*Methods for input validation*/
+    /*Methods for input validation - Stefany*/
     private boolean isValidEmailAddress(String email) {
         //Using Apache Commons Validator to ensure the data is valid
         EmailValidator validator = EmailValidator.getInstance();
@@ -268,7 +262,14 @@ public class RegisterController {
         return null;
     }
 
-    /*Sign up button*/
+    /*Sign up button - Felipe*/
+
+    private String getPasswordInput() {
+        return passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
+    }
+    private String getConfirmInput() {
+        return confirmPasswordPF.isVisible() ? confirmPasswordPF.getText() : confirmPasswordTF.getText();
+    }
 
     @FXML
     void onClickSignUp(ActionEvent event) {
@@ -324,7 +325,7 @@ public class RegisterController {
         }
     }
 
-    /*Back button*/
+    /*Back button - Stefany*/
 
     @FXML
     void onClickBack(ActionEvent event) {

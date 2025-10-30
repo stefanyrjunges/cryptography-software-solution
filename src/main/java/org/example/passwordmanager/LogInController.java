@@ -34,7 +34,7 @@ public class LogInController {
         errorAlert.setHeaderText(null);
     }
 
-    /*Methods for input validation*/
+    /*Methods for input validation - Stefany*/
 
     private boolean isValidEmailAddress(String email) {
         //Using Apache Commons Validator to ensure the data is valid
@@ -48,11 +48,6 @@ public class LogInController {
                 ? passwordPF.getText().trim().isEmpty()
                 : passwordTF.getText().trim().isEmpty();
         return emailEmpty || passwordEmpty;
-    }
-
-    //helper to read visible password
-    private String getPasswordInput() {
-        return passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
     }
 
     private Alert validateInput() {
@@ -75,7 +70,7 @@ public class LogInController {
         return null;
     }
 
-    /*Method to prevent unlimited login attempts*/
+    /*Method to prevent unlimited login attempts - Stefany*/
 
     private void handleLoginAttempts() {
         //If log in button was pressed, counts for one attempt
@@ -107,7 +102,7 @@ public class LogInController {
         }
     }
 
-    /*Toggle button*/
+    /*Toggle button to hide/unhide password - Stefany*/
 
     @FXML
     void onClickToggleButton() {
@@ -137,7 +132,12 @@ public class LogInController {
         }
     }
 
-    /*Log in button*/
+    /*Log in button - Felipe*/
+
+    //Helper to read visible password
+    private String getPasswordInput() {
+        return passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
+    }
 
     @FXML
     void onClickLogIn() {
@@ -162,7 +162,6 @@ public class LogInController {
                 successAlert.setTitle("Logged in!");
                 successAlert.setContentText("You're logged in.");
                 successAlert.showAndWait();
-                // proceed to your next scene/dashboard here
             } else {
                 Alert fail = new Alert(Alert.AlertType.ERROR);
                 fail.setHeaderText(null);
@@ -175,7 +174,7 @@ public class LogInController {
         }
     }
 
-    /* Sign up button */
+    /* Sign up button - Stefany*/
 
     @FXML
     void onClickSignUp() {
