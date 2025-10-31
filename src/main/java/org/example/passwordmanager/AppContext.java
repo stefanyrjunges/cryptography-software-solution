@@ -1,8 +1,21 @@
 package org.example.passwordmanager;
 
 public class AppContext {
-    // as database isn't ready, we use this in memory repo to test GUI flows today.
-    // later to be replaced wih database
-    public static final InMemoryDataBase UserRepo = new  InMemoryDataBase();
+    public static final UserRepository UserRepo;
+
+    static {
+        String jdbcUrl = System.getenv("APP_JDBC_URL");
+        String dbUser = System.getenv("APP_DB_USER");
+        String dbPass = System.getenv("APP_DB_PASSWORD");
+
+        if (jdbcUrl != null && dbUser != null && dbPass != null) {
+            UserRepo = new PostgresDatabase(jdbcUrl, dbUser, dbPass);
+            System.out.println("Using Supabase PostgresDatabase");
+        } else {
+            UserRepo = new InMemoryDataBase();
+            System.out.println("Using InMemoryDataBase (no DB credentials found)");
+        }
+    }
+
     private AppContext() {}
 }
