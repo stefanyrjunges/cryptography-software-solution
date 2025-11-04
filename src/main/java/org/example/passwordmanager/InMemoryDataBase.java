@@ -3,7 +3,7 @@ package org.example.passwordmanager;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InMemoryDataBase {
+public class InMemoryDataBase implements UserRepository{
     private final Map<String, String> users = new ConcurrentHashMap<>(); //email -> bcrypt hash
 
     public boolean usernameExists(String email){
