@@ -21,6 +21,9 @@
 #loginLBL, #detailsTF {
     -fx-text-fill: white;
 }
+#registerLBL, #detailsTF {
+    -fx-text-fill: white;
+}
 
 .text-field, .password-field {
     -fx-background-color: #3c3c3c; /* lighter shade for visibility */

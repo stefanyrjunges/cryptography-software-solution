@@ -33,6 +33,7 @@ public class LogInController {
     @FXML
     private void initialize (){
         errorAlert.setHeaderText(null);
+        updateToggleText();
     }
 
     /*Methods for input validation - Stefany*/
@@ -187,9 +188,12 @@ public class LogInController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("registration.fxml"));
             Parent root = fxmlLoader.load();
 
+            Scene scene = new Scene(root);
+            ThemeManager.applyTheme(scene);
+
             Stage newStage = new Stage();
             newStage.setTitle("Register");
-            newStage.setScene(new Scene(root));
+            newStage.setScene(scene);
             newStage.setResizable(false);
             newStage.show();
         } catch (IOException i) {
@@ -205,18 +209,13 @@ public class LogInController {
     @FXML
     private void onToggleTheme() {
         Scene scene = themeToggle.getScene();
-        if (scene == null) return;
-
-        if (themeToggle.isSelected()) {
-            // Switch to dark mode
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add(getClass().getResource("dark-theme.css").toExternalForm());
-            themeToggle.setText("☀ Light Mode");
-        } else {
-            // Switch back to light mode
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add(getClass().getResource("light-theme.css").toExternalForm());
-            themeToggle.setText("☾ Dark Mode");
-        }
+        ThemeManager.toggleTheme(scene);
+        updateToggleText();
     }
+
+    private void updateToggleText() {
+        themeToggle.setText(ThemeManager.isDarkMode() ? "\u2600 Light Mode" : "\u263E Dark Mode");
+    }
+
+
 }

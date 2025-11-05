@@ -13,7 +13,7 @@ public class Start extends Application {
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("light-theme.css").toExternalForm());
+        ThemeManager.applyTheme(scene);
         primaryStage.setTitle("Log In");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
