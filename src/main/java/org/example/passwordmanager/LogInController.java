@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import org.apache.commons.validator.routines.EmailValidator;
 import java.io.IOException;
 import java.util.Objects;
+import javafx.scene.control.ToggleButton;
 
 public class LogInController {
 
@@ -195,6 +196,27 @@ public class LogInController {
             errorAlert.setTitle("Error");
             errorAlert.setContentText("An error occurred. Please try again.");
             System.out.println("Error: " + i);
+        }
+    }
+
+    @FXML
+    private ToggleButton themeToggle;
+
+    @FXML
+    private void onToggleTheme() {
+        Scene scene = themeToggle.getScene();
+        if (scene == null) return;
+
+        if (themeToggle.isSelected()) {
+            // Switch to dark mode
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(getClass().getResource("dark-theme.css").toExternalForm());
+            themeToggle.setText("☀ Light Mode");
+        } else {
+            // Switch back to light mode
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(getClass().getResource("light-theme.css").toExternalForm());
+            themeToggle.setText("☾ Dark Mode");
         }
     }
 }

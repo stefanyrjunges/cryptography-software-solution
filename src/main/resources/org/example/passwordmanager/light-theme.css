@@ -1,0 +1,13 @@
+.root {
+    -fx-background-color: #f4f4f4;
+    -fx-text-fill: #000000;
+}
+
+#bannerAP {
+    -fx-background-color: #0047AB;
+}
+
+.button {
+    -fx-background-color: #0047AB;
+    -fx-text-fill: white;
+}

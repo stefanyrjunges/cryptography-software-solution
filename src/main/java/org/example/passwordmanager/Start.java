@@ -10,8 +10,10 @@ import java.util.Objects;
 public class Start extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("light-theme.css").toExternalForm());
         primaryStage.setTitle("Log In");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
