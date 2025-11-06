@@ -99,8 +99,7 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- 👇 Add this new plugin to generate a proper manifest -->
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
