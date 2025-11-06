@@ -7,6 +7,8 @@ import java.util.List;
 
 public final class SQLInjectionPrevention {
 
+    //SQL Injection Prevention - Teephopalex Machugh
+
     private SQLInjectionPrevention() {}
 
     private static final Pattern EMAIL_PATTERN =

@@ -1,6 +1,8 @@
 package org.example.passwordmanager;
 import org.mindrot.jbcrypt.BCrypt;
 
+// PasswordHash - Felipe
+
 public class PasswordHash {
     private static final int COST = 12;
 

@@ -22,12 +22,7 @@
                </font>
             </Button>
 
-             <ToggleButton fx:id="themeToggle"
-                           layoutX="292.0"
-                           layoutY="21.0"
-                           mnemonicParsing="false"
-                           text="🌙 Dark Mode"
-                           onAction="#onToggleTheme"/>
+             <ToggleButton fx:id="themeToggle" layoutX="292.0" layoutY="21.0" mnemonicParsing="false" onAction="#onToggleTheme" text="🌙 Dark Mode" />
 
          </children></AnchorPane>
         <Label fx:id="registerLBL" layoutX="29.0" layoutY="86.0" text="Register">
@@ -40,7 +35,7 @@
                 <Font name="Ebrima" size="12.0" />
             </font>
         </Label>
-        <AnchorPane layoutX="26.0" layoutY="167.0" prefHeight="440.0" prefWidth="350.0" style="-fx-background-color: #ffff;" stylesheets="@style.css">
+        <AnchorPane fx:id="registrationAP" layoutX="26.0" layoutY="167.0" prefHeight="440.0" prefWidth="350.0" style="-fx-background-color: #ffff;" stylesheets="@style.css">
             <children>
                 <Label fx:id="emailLBL" layoutX="15.0" layoutY="14.0" stylesheets="@style.css" text="E-mail address">
                     <font>

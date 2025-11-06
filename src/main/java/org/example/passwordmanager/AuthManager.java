@@ -13,11 +13,10 @@ public class AuthManager {
     public AuthManager(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
-
-
+    
     public boolean authenticate(String email, String plainPassword) {
-        if(email == null || plainPassword == null) return false;
-        if(plainPassword.length() > 1024) return false;
+        if (email == null || plainPassword == null) return false;
+        if (plainPassword.length() > 1024) return false;
 
         // Normalize email
         String normalized = email.trim().toLowerCase();
@@ -33,11 +32,5 @@ public class AuthManager {
 
         return BCrypt.checkpw(plainPassword, storedHash);
     }
-
-
 }
-// validates input
-// gets hash from DB
-// calls PasswordHash
-// returns true/false
 

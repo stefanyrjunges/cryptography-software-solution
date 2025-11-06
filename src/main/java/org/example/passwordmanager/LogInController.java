@@ -19,7 +19,7 @@ public class LogInController {
     @FXML
     Button signUpBTN, loginBTN;
     @FXML
-    ToggleButton toggleButton;
+    ToggleButton toggleButton, themeToggle;
     @FXML
     TextField emailTF, passwordTF;
     @FXML
@@ -134,7 +134,7 @@ public class LogInController {
         }
     }
 
-    /*Log in button - Felipe*/
+    /*Log in button - Felipe and Stefany*/
 
     //Helper to read visible password
     private String getPasswordInput() {
@@ -154,10 +154,8 @@ public class LogInController {
             String email = emailTF.getText().trim().toLowerCase();
             String input = getPasswordInput();
 
-// Use the new AuthenticationService (constructed with your existing repo)
             AuthManager authService = new AuthManager(AppContext.UserRepo);
             boolean ok = authService.authenticate(email, input);
-
 
             if (ok) {
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -204,8 +202,7 @@ public class LogInController {
         }
     }
 
-    @FXML
-    private ToggleButton themeToggle;
+    //Dark mode - Teephopalex Machugh
 
     @FXML
     private void onToggleTheme() {
@@ -217,6 +214,4 @@ public class LogInController {
     private void updateToggleText() {
         themeToggle.setText(ThemeManager.isDarkMode() ? "\u2600 Light Mode" : "\u263E Dark Mode");
     }
-
-
 }

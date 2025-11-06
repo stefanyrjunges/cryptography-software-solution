@@ -241,6 +241,8 @@ public class RegisterController {
     }
 
     private Alert validateInput() {
+        String password = passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
+
         if (isMissingField()) {
             errorAlert.setTitle("Missing fields");
             errorAlert.setContentText("Please fill in all the fields.");
@@ -249,7 +251,7 @@ public class RegisterController {
             errorAlert.setTitle("Invalid e-mail.");
             errorAlert.setContentText("Invalid e-mail.");
             return errorAlert;
-        } else if (!isStrongPassword()) {
+        } else if (!isStrongPassword() || !arePasswordRequirementsMet(password)) {
             errorAlert.setTitle("Weak password");
             errorAlert.setContentText("Your password is weak. Please choose another or generate a random one.");
             return errorAlert;
@@ -270,9 +272,6 @@ public class RegisterController {
 
     private String getPasswordInput() {
         return passwordPF.isVisible() ? passwordPF.getText() : passwordTF.getText();
-    }
-    private String getConfirmInput() {
-        return confirmPasswordPF.isVisible() ? confirmPasswordPF.getText() : confirmPasswordTF.getText();
     }
 
     @FXML
@@ -358,13 +357,14 @@ public class RegisterController {
         }
     }
 
+    //Dark mode - Teephopalex Machugh
+
     @FXML
     private void onToggleTheme() {
         Scene scene = themeToggle.getScene();
         ThemeManager.toggleTheme(scene);
         updateToggleText();
     }
-
 
     private void updateToggleText() {
         if (themeToggle != null) {

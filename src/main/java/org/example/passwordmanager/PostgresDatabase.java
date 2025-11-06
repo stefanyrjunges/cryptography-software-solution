@@ -8,6 +8,7 @@ public class PostgresDatabase implements UserRepository {
 
     private final HikariDataSource ds;
 
+    // Database - Iga
     public PostgresDatabase(String url, String user, String password) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(url);
@@ -20,9 +21,10 @@ public class PostgresDatabase implements UserRepository {
         ds = new HikariDataSource(config);
     }
 
+    // Database - Iga
     @Override
     public boolean usernameExists(String email) {
-        // SQL Injection Prevention
+        // SQL Injection Prevention - Teephopalex Machugh
         // Validate and normalize email before use
         String safeEmail = SQLInjectionPrevention.validateEmail(email);
 
@@ -30,7 +32,7 @@ public class PostgresDatabase implements UserRepository {
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            // SQL Injection Prevention
+            // SQL Injection Prevention - Teephopalex Machugh
             ps.setString(1, safeEmail);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -42,6 +44,8 @@ public class PostgresDatabase implements UserRepository {
         }
     }
 
+
+    // Database - Iga
     @Override
     public void saveUser(String email, String passwordHash) {
         String safeEmail = SQLInjectionPrevention.validateEmail(email);
@@ -51,7 +55,7 @@ public class PostgresDatabase implements UserRepository {
                 "ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash";
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            // SQL Injection Prevention
+            // SQL Injection Prevention - Teephopalex Machugh
             ps.setString(1, safeEmail);
             ps.setString(2, safeHash);
 

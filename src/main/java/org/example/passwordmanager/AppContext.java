@@ -3,6 +3,8 @@ package org.example.passwordmanager;
 public class AppContext {
     public static final UserRepository UserRepo;
 
+    //Context - Iga
+
     static {
         String jdbcUrl = System.getenv("APP_JDBC_URL");
         String dbUser = System.getenv("APP_DB_USER");

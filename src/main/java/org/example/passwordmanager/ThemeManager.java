@@ -4,6 +4,8 @@ import javafx.scene.Scene;
 import java.io.*;
 import java.util.Properties;
 
+//Dark/light mode - Teephopalex Machugh
+
 public class ThemeManager {
     private static boolean darkMode = false;
     private static final String SETTINGS_FILE = "user-settings.properties";
