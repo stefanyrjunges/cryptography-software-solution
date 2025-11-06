@@ -21,6 +21,14 @@
                   <Font name="System Bold" size="31.0" />
                </font>
             </Button>
+
+             <ToggleButton fx:id="themeToggle"
+                           layoutX="292.0"
+                           layoutY="21.0"
+                           mnemonicParsing="false"
+                           text="🌙 Dark Mode"
+                           onAction="#onToggleTheme"/>
+
          </children></AnchorPane>
         <Label fx:id="registerLBL" layoutX="29.0" layoutY="86.0" text="Register">
             <font>

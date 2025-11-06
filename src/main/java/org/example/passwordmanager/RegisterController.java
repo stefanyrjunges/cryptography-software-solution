@@ -22,6 +22,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 public class RegisterController {
 
     @FXML
+    private ToggleButton themeToggle;
+
+    @FXML
     private TextField emailTF, passwordTF, confirmPasswordTF;
     @FXML
     private PasswordField passwordPF, confirmPasswordPF;
@@ -38,6 +41,7 @@ public class RegisterController {
     @FXML
     private void initialize() {
         errorAlert.setHeaderText(null);
+        updateToggleText();
 
         /*Progress Bar listener - Stefany*/
         //Tracking text changes to update the progress bar
@@ -309,9 +313,13 @@ public class RegisterController {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
                 Parent root = fxmlLoader.load();
 
+                Scene scene = new Scene(root);
+                ThemeManager.applyTheme(scene);
+
                 Stage newStage = new Stage();
                 newStage.setTitle("Log In");
-                newStage.setScene(new Scene(root));
+                newStage.setScene(scene);
+
                 newStage.setResizable(false);
                 newStage.show();
             } catch (IOException i) {
@@ -337,13 +345,31 @@ public class RegisterController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
             Parent root = fxmlLoader.load();
 
+            Scene scene = new Scene(root);
+            ThemeManager.applyTheme(scene);
+
             Stage newStage = new Stage();
             newStage.setTitle("Log In");
-            newStage.setScene(new Scene(root));
+            newStage.setScene(scene);
             newStage.setResizable(false);
             newStage.show();
         } catch (IOException i) {
             System.out.println("Error: " + i);
         }
     }
+
+    @FXML
+    private void onToggleTheme() {
+        Scene scene = themeToggle.getScene();
+        ThemeManager.toggleTheme(scene);
+        updateToggleText();
+    }
+
+
+    private void updateToggleText() {
+        if (themeToggle != null) {
+            themeToggle.setText(ThemeManager.isDarkMode() ? "☀ Light Mode" : "☾ Dark Mode");
+        }
+    }
+
 }

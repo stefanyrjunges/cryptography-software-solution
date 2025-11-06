@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import org.apache.commons.validator.routines.EmailValidator;
 import java.io.IOException;
 import java.util.Objects;
+import javafx.scene.control.ToggleButton;
 
 public class LogInController {
 
@@ -32,6 +33,7 @@ public class LogInController {
     @FXML
     private void initialize (){
         errorAlert.setHeaderText(null);
+        updateToggleText();
     }
 
     /*Methods for input validation - Stefany*/
@@ -152,9 +154,10 @@ public class LogInController {
             String email = emailTF.getText().trim().toLowerCase();
             String input = getPasswordInput();
 
-            String storedHash = AppContext.UserRepo.findHashByEmail(email);
+// Use the new AuthenticationService (constructed with your existing repo)
+            AuthManager authService = new AuthManager(AppContext.UserRepo);
+            boolean ok = authService.authenticate(email, input);
 
-            boolean ok = storedHash != null && PasswordHash.verify(input, storedHash);
 
             if (ok) {
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -186,9 +189,12 @@ public class LogInController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("registration.fxml"));
             Parent root = fxmlLoader.load();
 
+            Scene scene = new Scene(root);
+            ThemeManager.applyTheme(scene);
+
             Stage newStage = new Stage();
             newStage.setTitle("Register");
-            newStage.setScene(new Scene(root));
+            newStage.setScene(scene);
             newStage.setResizable(false);
             newStage.show();
         } catch (IOException i) {
@@ -197,4 +203,20 @@ public class LogInController {
             System.out.println("Error: " + i);
         }
     }
+
+    @FXML
+    private ToggleButton themeToggle;
+
+    @FXML
+    private void onToggleTheme() {
+        Scene scene = themeToggle.getScene();
+        ThemeManager.toggleTheme(scene);
+        updateToggleText();
+    }
+
+    private void updateToggleText() {
+        themeToggle.setText(ThemeManager.isDarkMode() ? "\u2600 Light Mode" : "\u263E Dark Mode");
+    }
+
+
 }

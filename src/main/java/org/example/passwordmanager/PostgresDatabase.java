@@ -22,10 +22,17 @@ public class PostgresDatabase implements UserRepository {
 
     @Override
     public boolean usernameExists(String email) {
+        // SQL Injection Prevention
+        // Validate and normalize email before use
+        String safeEmail = SQLInjectionPrevention.validateEmail(email);
+
         String sql = "SELECT 1 FROM app_users WHERE email = ?";
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, email);
+
+            // SQL Injection Prevention
+            ps.setString(1, safeEmail);
+
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
             }
@@ -37,12 +44,17 @@ public class PostgresDatabase implements UserRepository {
 
     @Override
     public void saveUser(String email, String passwordHash) {
+        String safeEmail = SQLInjectionPrevention.validateEmail(email);
+        String safeHash = SQLInjectionPrevention.cleanText(passwordHash, 200);
+
         String sql = "INSERT INTO app_users(email, password_hash) VALUES(?, ?) " +
                 "ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash";
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, email);
-            ps.setString(2, passwordHash);
+            // SQL Injection Prevention
+            ps.setString(1, safeEmail);
+            ps.setString(2, safeHash);
+
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,10 +64,15 @@ public class PostgresDatabase implements UserRepository {
 
     @Override
     public String findHashByEmail(String email) {
+        // Validate email, SQL Injection Prevention
+        String safeEmail = SQLInjectionPrevention.validateEmail(email);
+
         String sql = "SELECT password_hash FROM app_users WHERE email = ?";
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, email);
+
+            ps.setString(1, safeEmail);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getString("password_hash");

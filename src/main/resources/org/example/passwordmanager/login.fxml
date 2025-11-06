@@ -10,9 +10,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="545.0" prefWidth="401.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.LogInController">
+<AnchorPane prefHeight="545.0" prefWidth="401.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.passwordmanager.LogInController">
     <children>
-        <AnchorPane fx:id="bannerAP" prefHeight="67.0" prefWidth="401.0" style="-fx-background-color: #0047AB;" />
+        <AnchorPane fx:id="bannerAP" prefHeight="67.0" prefWidth="401.0" style="-fx-background-color: #0047AB;">
+         <children>
+             <ToggleButton fx:id="themeToggle"
+                           layoutX="292.0" layoutY="21.0"
+                           mnemonicParsing="false"
+                           text="🌙 Dark Mode"
+                           onAction="#onToggleTheme" />
+
+         </children>
+        </AnchorPane>
         <Label fx:id="loginLBL" layoutX="32.0" layoutY="82.0" text="Log in">
             <font>
                 <Font name="Ebrima Bold" size="36.0" />
