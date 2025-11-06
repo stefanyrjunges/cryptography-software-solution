@@ -154,9 +154,10 @@ public class LogInController {
             String email = emailTF.getText().trim().toLowerCase();
             String input = getPasswordInput();
 
-            String storedHash = AppContext.UserRepo.findHashByEmail(email);
+// Use the new AuthenticationService (constructed with your existing repo)
+            AuthManager authService = new AuthManager(AppContext.UserRepo);
+            boolean ok = authService.authenticate(email, input);
 
-            boolean ok = storedHash != null && PasswordHash.verify(input, storedHash);
 
             if (ok) {
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
