@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Created-By: Maven JAR Plugin 3.2.2
+Build-Jdk-Spec: 21
+Class-Path: javafx-controls-17.0.6.jar javafx-controls-17.0.6-win.jar ja
+ vafx-fxml-17.0.6.jar javafx-fxml-17.0.6-win.jar javafx-graphics-17.0.6.
+ jar javafx-graphics-17.0.6-win.jar javafx-base-17.0.6.jar javafx-base-1
+ 7.0.6-win.jar controlsfx-11.2.1.jar commons-validator-1.10.0.jar common
+ s-beanutils-1.11.0.jar commons-digester-2.1.jar commons-logging-1.3.5.j
+ ar commons-collections-3.2.2.jar jbcrypt-0.4.jar postgresql-42.7.3.jar 
+ checker-qual-3.42.0.jar HikariCP-5.1.0.jar slf4j-api-1.7.36.jar
+Main-Class: org.example.passwordmanager.Start
+
